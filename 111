@@ -6,12 +6,21 @@ these keys Original dictionary of lists: {'Boys': [72, 68, 70, 69, 74], 'Girls':
 From the given dictionary of lists create the following list of dictionaries:
 [{'Boys': 72, 'Girls': 63}, {'Boys': 68, 'Girls': 65}, {'Boys': 70, 'Girls': 69}, {'Boys':
 69, 'Girls': 62}, {‘Boys’:74, ‘Girls’:61]
+              
+
+
 org_Dictionary = {'Boys': [72, 68, 70, 69, 74], 'Girls': [63, 65, 69, 62, 61]}
 res_list = []
 for by, gl in zip(org_Dictionary['Boys'], org_Dictionary['Girls']):
 res_list.append({'Boys': by, 'Girls': gl})
 print(res_list)
 Output
+
+
+
+
+
+
 2. Write programs in Python using NumPy library to do the following:
 a. Compute the mean, standard deviation, and variance of a two dimensional
 random integer array along the second axis.
@@ -21,7 +30,10 @@ c. Create a 2-dimensional array of size m x n integer elements, also print the
 shape, type and data type of the array and then reshape it into nx m array, n
 and m are user inputs given at the run time.
 d. Test whether the elements of a given array.
-3
+
+
+
+
 (a) Code =>
 import numpy as np
 random_arr = np.random.randint(1, 100, size=(3, 4))
@@ -37,7 +49,7 @@ print(std_deviation_values)
 print("\nVariance along the second axis : ")
 print(variance_values)
 Output
-4
+
 (b) Code =>
 import numpy as np
 # Given array
@@ -48,6 +60,8 @@ print(data_Arr)
 print("\nIndices of Sorted Elements are as follow :")
 print(sorted_indices)
 Output
+
+
 (c) Code =>
 import numpy as np
 row = int(input("Enter the number of rows : "))
@@ -56,7 +70,6 @@ original_arr = np.random.randint(1, 100, size=(row, clm))
 print("\nOriginal Array is : ")
 print(original_arr)
 print("\nShape of the Array is : ", original_arr.shape)
-5
 print("Type of the Array is : ", type(original_arr))
 print("Data Type of the Array is : ", original_arr.dtype)
 # Reshape the array into nxm array
@@ -65,13 +78,14 @@ reshaped_arr = original_arr.reshape((clm, row))
 print("\nReshaped Array (nxm):")
 print(reshaped_arr)
 Output
+
+
 (d) Code =>
 import numpy as np
 given_arr = np.array([1.0, 0.0, 3.5, np.nan, 0.0, 7.2, np.nan, 9.8])
 zero_indices = np.where(given_arr == 0)[0]
 non_zero_indices = np.where(given_arr != 0)[0]
 nan_indices = np.where(np.isnan(given_arr))[0]
-6
 print("Given Array is :")
 print(given_arr)
 print("\nIndices of Zero Elements are :")
@@ -81,7 +95,12 @@ print(non_zero_indices)
 print("\nIndices of NaN Elements are :")
 print(nan_indices)
 Output
-7
+
+
+
+
+
+
 3. Create a dataframe having at least 3 columns and 50 rows to store numeric
 data generated using a random function. Replace 10% of the values by null
 values whose index positions are generated using random function. Do the
@@ -96,6 +115,13 @@ f. Find the correlation between first and second column and covariance
 between second and third column.
 g. Detect the outliers and remove the rows having outliers.
 h. Discretize second column and create 5 bins
+
+
+
+
+
+
+
 import pandas as pd
 import numpy as np
 data = {
@@ -107,45 +133,72 @@ df = pd.DataFrame(data)
 # Replace 10% of values with NaN at random positions
 nan_positions = np.random.choice(df.size, size=int(0.1 * df.size), replace=False)
 df.values.flat[nan_positions] = np.nan
+
 # a. Identify and count missing values in a dataframe
+
 missing_values_count = df.isnull().sum()
 print("a. Missing Values Count:")
-8
 print(missing_values_count)
+
+
 # b. Drop the column having more than 5 null values
+
+
 df = df.dropna(axis=1, thresh=df.shape[0] - 5)
 print("\nb. DataFrame after dropping columns:")
 print(df)
-# c. Identify the row label having the maximum sum of all values in a row and drop
-that row
+
+
+# c. Identify the row label having the maximum sum of all values in a row and drop that row
+
+
 max_sum_row_label = df.sum(axis=1).idxmax()
 df = df.drop(index=max_sum_row_label)
 print("\nc. DataFrame after dropping row with maximum sum:")
 print(df)
+
+
 # Print column names to check if 'Column1' exists
+
 print("Column names:", df.columns)
+
+
 # Sort the DataFrame on the basis of the first column
+
+
 df = df.sort_values(by=df.columns[0]).reset_index(drop=True)
 print("\nd. DataFrame sorted on the basis of the first column:")
 print(df)
+
+
 # e. Remove all duplicates from the first column
+
+
 df = df.drop_duplicates(subset=df.columns[0], ignore_index=True)
 print("\ne. DataFrame after removing duplicates from the first column:")
 print(df)
+
+
+
 # f. Find the correlation between the first and second column and covariance
 between the second and third column
+
 print("\nf. Column names before calculations:", df.columns)
 if len(df.columns) >= 3:
 correlation = df[df.columns[0]].corr(df[df.columns[1]])
 covariance = df[df.columns[1]].cov(df[df.columns[2]])
-9
 print(" Correlation between", df.columns[0], "and", df.columns[1], ":",
 correlation)
 print(" Covariance between", df.columns[1], "and", df.columns[2], ":",
 covariance)
 else:
 print(" Insufficient columns to calculate correlation and covariance.")
+
+
+
 # g. Detect the outliers and remove the rows having outliers
+
+
 Q1 = df.quantile(0.25)
 Q3 = df.quantile(0.75)
 IQR = Q3 - Q1
@@ -153,7 +206,12 @@ outliers = ((df < (Q1 - 1.5 * IQR)) | (df > (Q3 + 1.5 * IQR)))
 df = df[~outliers.any(axis=1)]
 print("\ng. DataFrame after removing rows with outliers:")
 print(df)
+
+
+
 # h. Discretize second column and create 5 bins
+
+
 df['Column2_bins'] = pd.cut(df['Column2'], bins=5)
 print("\nh. DataFrame with second column discretized into 5 bins:")
 print(df)
@@ -164,6 +222,10 @@ Output
 13
 14
 15
+
+
+
+
 4. Consider two excel files having attendance of a workshop’s participants for
 two days. Each file has three fields ‘Name’, ‘Time of joining’, duration (in
 minutes) where names are unique within a file. Note that duration may take
@@ -176,29 +238,51 @@ days.
 c. Merge two data frames row-wise and find the total number of records in the
 data frame.
 d. Merge two data frames and use two columns names and duration as multirow indexes. Generate descriptive statistics for this multi-index.
+
+
+
+
 import pandas as pd
+
 # Load data from Excel files into two dataframes
 file1_path = 'path/to/workshop_day1.xlsx'
 file2_path = 'path/to/workshop_day2.xlsx'
 df_day1 = pd.read_excel(file1_path)
 df_day2 = pd.read_excel(file2_path)
+
+
 # a. Perform merging to find names of students who attended the workshop on both
 days
+
 common_names = pd.merge(df_day1, df_day2, on='Name', how='inner')['Name']
 print("a. Names of students who attended the workshop on both days:")
 print(common_names)
+
+
 # b. Find names of all students who attended the workshop on either of the days
+
+
 all_names = pd.merge(df_day1, df_day2, on='Name', how='outer')['Name']
 print("\nb. Names of all students who attended the workshop on either of the
 days:")
 print(all_names)
 16
+
+
+
 # c. Merge two data frames row-wise and find the total number of records
+
+
 merged_df = pd.concat([df_day1, df_day2], ignore_index=True)
 total_records = len(merged_df)
 print("\nc. Total number of records in the merged data frame:", total_records)
+
+
+
 # d. Merge two data frames and use two columns 'Name' and 'Duration' as multi-row
 indexes.
+
+
 # Generate descriptive statistics for this multi-index.
 merged_multiindex_df = pd.merge(df_day1, df_day2, on=['Name', 'Duration'],
 how='outer')
@@ -206,6 +290,10 @@ statistics_multiindex = merged_multiindex_df.groupby(['Name',
 'Duration']).describe()
 print("\nd. Descriptive statistics for the multi-index (Name, Duration):")
 print(statistics_multiindex)
+
+
+
+
 5. Taking Iris data, plot the following with proper legend and axis labels:
 (Download IRIS data from: https://archive.ics.uci.edu/ml/datasets/iris or
 import it from sklearn.datasets)
@@ -213,6 +301,10 @@ a. Plot bar chart to show the frequency of each class label in the data.
 b. Draw a scatter plot for Petal width vs sepal width.
 c. Plot density distribution for feature petal length.
 d. Use a pair plot to show pairwise bivariate distribution in the Iris Dataset.
+
+
+
+
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
@@ -227,14 +319,22 @@ iris_data = {
 'virginica', 'setosa', 'versicolor', 'versicolor', 'versicolor']
 }
 iris_df = pd.DataFrame(iris_data)
+
+
 # a. Plot bar chart to show the frequency of each class label in the data.
+
+
 plt.figure(figsize=(8, 5))
 sns.countplot(x='species', data=iris_df)
 plt.title('Frequency of Each Class Label in Iris Dataset')
 plt.xlabel('Species')
 plt.ylabel('Count')
 plt.show()
+
+
 # b. Draw a scatter plot for Petal width vs Sepal width.
+
+
 plt.figure(figsize=(8, 5))
 sns.scatterplot(x='sepal_width', y='petal_width', hue='species', data=iris_df)
 plt.title('Scatter Plot: Petal Width vs Sepal Width')
@@ -242,7 +342,12 @@ plt.xlabel('Sepal Width (cm)')
 plt.ylabel('Petal Width (cm)')
 plt.legend()
 plt.show()
+
+
 # c. Plot density distribution for feature petal length.
+
+
+
 plt.figure(figsize=(8, 5))
 sns.kdeplot(data=iris_df, x='petal_length', hue='species', fill=True,
 common_norm=False)
@@ -251,14 +356,22 @@ plt.xlabel('Petal Length (cm)')
 plt.ylabel('Density')
 plt.legend()
 plt.show()
+
+
 # d. Use a pair plot to show pairwise bivariate distribution in the Iris Dataset.
+
+
 sns.pairplot(iris_df, hue='species', markers=["o", "s", "D"], height=2)
 18
 plt.suptitle('Pairwise Bivariate Distribution in Iris Dataset', y=1.02)
 plt.show()
+
 Output
 19
 20
+
+
+
 6. Consider any sales training/ weather forecasting dataset
 a. Compute mean of a series grouped by another series
 b. Fill an intermittent time series to replace all missing dates with values of
@@ -267,6 +380,9 @@ c. Perform appropriate year-month string to dates conversion.
 d. Split a dataset to group by two columns and then sort the aggregated results
 within the groups.
 e. Split a given dataframe into groups with bin counts.
+
+
+
 import pandas as pd
 import numpy as np
 # Creating a sample dataset
@@ -280,27 +396,48 @@ freq='D').tolist(),
 190, np.nan, 210, 220, 230, 240, 250, 260]
 }
 df = pd.DataFrame(data)
+
+
 # a. Compute mean of a series grouped by another series
+
 mean_sales_by_product = df.groupby('Product')['Sales'].mean()
 print("a. Mean sales by product:")
 print(mean_sales_by_product)
+
+
 # b. Fill an intermittent time series to replace all missing dates with values of
+
 previous non-missing date.
 df_filled = df.set_index('Date').asfreq('D').ffill()
 print("\nb. DataFrame after filling missing dates:")
 21
 print(df_filled)
+
+
 # c. Perform appropriate year-month string to dates conversion.
+
+
 df['YearMonth'] = pd.to_datetime(df['Date']).dt.to_period('M')
 print("\nc. DataFrame with YearMonth column:")
 print(df)
+
+
+
+
+
 # d. Split a dataset to group by two columns and then sort the aggregated results
 within the groups.
+
+
 sorted_sales_by_product = df.groupby(['Product', 'YearMonth']).agg({'Sales':
 'mean'}).sort_values(by=['Product', 'YearMonth'])
 print("\nd. Sorted sales by product and year-month:")
 print(sorted_sales_by_product)
+
+
 # e. Split a given dataframe into groups with bin counts.
+
+
 bin_counts = 3
 df['SalesBin'] = pd.cut(df['Sales'], bins=bin_counts)
 grouped_by_bins = df.groupby('SalesBin')
@@ -312,12 +449,21 @@ print("\n")
 Output
 22
 23
+
+
+
+
+
 7. Consider a data frame containing data about students i.e. name, gender and
 passing division:
 a. Perform one hot encoding of the last two columns of categorical data using
 the get_dummies() function.
 b. Sort this data frame on the “Birth Month” column (i.e. January to
 December). Hint: Convert Month to Categorical.
+
+
+
+
 import pandas as pd
 # Your provided data
 data = {
@@ -338,25 +484,39 @@ data = {
 'III', 'I', 'III', 'II', 'II', 'I']
 }
 df = pd.DataFrame(data)
+
+
+
+
 # a. Perform one hot encoding of the last two columns of categorical data using
 the get_dummies() function.
+
 df_encoded = pd.get_dummies(df, columns=['Gender', 'Pass_Division'])
+
+
+
 # b. Sort this data frame on the “Birth Month” column.
 # Convert 'Birth_Month' to Categorical with custom order
+
 month_order = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
 'August', 'September', 'October', 'November', 'December']
 df_encoded['Birth_Month'] = pd.Categorical(df_encoded['Birth_Month'],
 categories=month_order, ordered=True)
+
+
+
 # Sort the DataFrame based on 'Birth_Month'
+
 df_sorted = df_encoded.sort_values(by='Birth_Month')
+
 # Display the results
+
 print("a. DataFrame after one-hot encoding:")
 print(df_encoded)
 print("\nb. DataFrame sorted on the 'Birth Month' column:")
 print(df_sorted)
-25
-Output
-26
+
+
 8. Consider the following data frame containing a family name, gender of the
 family member and her/his monthly income in each record.
 Write a program in Python using Pandas to perform the following:
@@ -367,6 +527,10 @@ c. Calculate and display monthly income of all members with income greater
 than Rs. 60000.00
 d. Calculate and display the average monthly income of the female members in
 the Shah family.
+
+
+
+
 import pandas as pd
 # Your provided data
 data = {
@@ -378,26 +542,45 @@ data = {
 103000.00, 55000.00, 112400.00, 81030.00, 71900.00]
 }
 df = pd.DataFrame(data)
-27
+
+
 # a. Calculate and display familywise gross monthly income.
+
+
+
 familywise_income = df.groupby('Name')['MonthlyIncome'].sum()
 print("a. Familywise Gross Monthly Income:")
 print(familywise_income)
+
+
+
 # b. Calculate and display the member with the highest monthly income in a family.
+
+
+
 max_income_member = df.loc[df.groupby('Name')['MonthlyIncome'].idxmax()]
 print("\nb. Member with the Highest Monthly Income in Each Family:")
 print(max_income_member)
+
+
 # c. Calculate and display monthly income of all members with income greater than
+
+
 Rs. 60000.00.
 high_income_members = df[df['MonthlyIncome'] > 60000.00]
 print("\nc. Monthly Income of Members with Income Greater Than Rs. 60000.00:")
 print(high_income_members)
+
+
+
 # d. Calculate and display the average monthly income of the female members in the
 Shah family.
+
+
+
+
 average_income_shah_females = df[(df['Name'] == 'Shah') & (df['Gender'] ==
 'Female')]['MonthlyIncome'].mean()
 print("\nd. Average Monthly Income of Female Members in the Shah Family:")
 print(average_income_shah_females)
-28
-Output
- Thank You !
+
