@@ -1,0 +1,7 @@
+import numpy as np
+data_Arr = np.array([56, 48, 22, 41, 78, 91, 24, 46, 8, 33])
+sorted_indices = np.argsort(data_Arr)
+print("Given Array is : ")
+print(data_Arr)
+print("\nIndices of Sorted Elements are as follow :")
+print(sorted_indices)
