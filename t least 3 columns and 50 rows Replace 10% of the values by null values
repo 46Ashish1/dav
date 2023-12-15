@@ -1,0 +1,53 @@
+import pandas as pd
+import numpy as np
+data = {
+'Column1': np.random.rand(50),
+'Column2': np.random.rand(50),
+'Column3': np.random.rand(50)
+}
+df = pd.DataFrame(data)
+# Replace 10% of values with NaN at random positions
+nan_positions = np.random.choice(df.size, size=int(0.1 * df.size), replace=False)
+df.values.flat[nan_positions] = np.nan
+# a. Identify and count missing values in a dataframe
+missing_values_count = df.isnull().sum()
+print("a. Missing Values Count:")
+print(missing_values_count)
+# b. Drop the column having more than 5 null values
+df = df.dropna(axis=1, thresh=df.shape[0] - 5)
+print("\nb. DataFrame after dropping columns:")
+print(df)
+# c. Identify the row label having the maximum sum of all values in a row and drop that row
+max_sum_row_label = df.sum(axis=1).idxmax()
+df = df.drop(index=max_sum_row_label)
+print("\nc. DataFrame after dropping row with maximum sum:")
+print(df)
+# Print column names to check if 'Column1' exists
+print("Column names:", df.columns)
+# Sort the DataFrame on the basis of the first column
+df = df.sort_values(by=df.columns[0]).reset_index(drop=True)
+print("\nd. DataFrame sorted on the basis of the first column:")
+print(df)
+# e. Remove all duplicates from the first column
+df = df.drop_duplicates(subset=df.columns[0], ignore_index=True)
+print("\ne. DataFrame after removing duplicates from the first column:")
+print(df)
+# f. Find the correlation between the first and second column and covariancebetween the second and third column
+print("\nf. Column names before calculations:", df.columns)
+if len(df.columns) >= 3:
+ correlation = df[df.columns[0]].corr(df[df.columns[1]])
+ covariance = df[df.columns[1]].cov(df[df.columns[2]])
+print(" Correlation between", df.columns[0], "and", df.columns[1], ":",correlation)
+print(" Covariance between", df.columns[1], "and", df.columns[2], ":",covariance)
+# else: 
+print(" Insufficient columns to calculate correlation and covariance.")
+Q1 = df.quantile(0.25)
+Q3 = df.quantile(0.75)
+IQR = Q3 - Q1
+outliers = ((df < (Q1 - 1.5 * IQR)) | (df > (Q3 + 1.5 * IQR)))
+df = df[~outliers.any(axis=1)]
+print("\ng. DataFrame after removing rows with outliers:")
+print(df)
+df['Column2_bins'] = pd.cut(df['Column2'], bins=5)
+print("\nh. DataFrame with second column discretized into 5 bins:")
+print(df)
