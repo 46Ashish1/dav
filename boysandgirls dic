@@ -1,0 +1,5 @@
+org_Dictionary = {'Boys': [72, 68, 70, 69, 74], 'Girls': [63, 65, 69, 62, 61]}
+res_list = []
+for by, gl in zip(org_Dictionary['Boys'], org_Dictionary['Girls']):
+res_list.append({'Boys': by, 'Girls': gl})
+print(res_list)
