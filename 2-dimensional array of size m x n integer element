@@ -1,0 +1,12 @@
+import numpy as np
+row = int(input("Enter the number of rows : "))
+clm = int(input("Enter the number of columns : "))
+original_arr = np.random.randint(1, 100, size=(row, clm))
+print("\nOriginal Array is : ")
+print(original_arr)
+print("\nShape of the Array is : ", original_arr.shape)
+print("Type of the Array is : ", type(original_arr))
+print("Data Type of the Array is : ", original_arr.dtype)
+reshaped_arr = original_arr.reshape((clm, row))
+print("\nReshaped Array (nxm):")
+print(reshaped_arr)
