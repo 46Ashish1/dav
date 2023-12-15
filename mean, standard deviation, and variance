@@ -1,0 +1,13 @@
+import numpy as np
+random_arr = np.random.randint(1, 100, size=(3, 4))
+mean_values = np.mean(random_arr, axis=1)
+std_deviation_values = np.std(random_arr, axis=1)
+variance_values = np.var(random_arr, axis=1)
+print("Original Array is :")
+print(random_arr)
+print("\nMean along the second axis : ")
+print(mean_values)
+print("\nStandard Deviation along the second axis : ")
+print(std_deviation_values)
+print("\nVariance along the second axis : ")
+print(variance_values)
