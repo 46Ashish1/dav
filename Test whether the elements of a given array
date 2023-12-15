@@ -1,0 +1,13 @@
+import numpy as np
+given_arr = np.array([1.0, 0.0, 3.5, np.nan, 0.0, 7.2, np.nan, 9.8])
+zero_indices = np.where(given_arr == 0)[0]
+non_zero_indices = np.where(given_arr != 0)[0]
+nan_indices = np.where(np.isnan(given_arr))[0]
+print("Given Array is :")
+print(given_arr)
+print("\nIndices of Zero Elements are :")
+print(zero_indices)
+print("\nIndices of Non-Zero Elements are :")
+print(non_zero_indices)
+print("\nIndices of NaN Elements are :")
+print(nan_indices)
